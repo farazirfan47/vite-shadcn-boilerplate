@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const PROXY_BASE_URL = 'https://costar-backend-production.up.railway.app';
 
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
 
   success: boolean;
 
@@ -26,11 +26,11 @@ export function useApiClient() {
 
   const [error, setError] = useState<string | null>(null);
 
-  const call = async <T = any>(
+  const call = async <T = unknown>(
 
     vendorCode: string,
 
-    params: Record<string, any> = {}
+    params: Record<string, unknown> = {}
 
   ): Promise<T> => {
 
@@ -66,9 +66,9 @@ export function useApiClient() {
 
       return result.data as T;
 
-    } catch (err: any) {
+    } catch (err) {
 
-      const errorMsg = err.message || 'Unknown error';
+      const errorMsg = err instanceof Error ? err.message : 'Unknown error';
 
       setError(errorMsg);
 
