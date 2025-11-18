@@ -2,7 +2,7 @@
 
 
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const PROXY_BASE_URL = 'https://costar-backend-production.up.railway.app';
 
@@ -26,7 +26,7 @@ export function useApiClient() {
 
   const [error, setError] = useState<string | null>(null);
 
-  const call = async <T = unknown>(
+  const call = useCallback(async <T = unknown>(
 
     vendorCode: string,
 
@@ -80,7 +80,7 @@ export function useApiClient() {
 
     }
 
-  };
+  }, []); // Empty dependency array since it only uses setState functions
 
   return { call, loading, error };
 
